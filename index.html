@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quái Vật Hóa - Han Vu</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #2c3e50; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; color: white; }
+        .card { background: #34495e; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center; width: 320px; border: 2px solid #3498db; }
+        h2 { color: #3498db; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
+        input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: none; outline: none; box-sizing: border-box; font-size: 16px; }
+        button { width: 100%; padding: 12px; background: #e74c3c; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.3s; }
+        button:hover { background: #c0392b; transform: scale(1.05); }
+        .result { margin-top: 25px; text-align: left; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; display: none; }
+        span { color: #f1c40f; font-weight: bold; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h2>QUÁI VẬT HÓA</h2>
+    <input type="text" id="search" placeholder="Nhập ký hiệu (Mg, Al, Fe...)">
+    <button onclick="traCuu()">TRIỆU HỒI</button>
+    <div id="info" class="result">
+        <p>Tên: <span id="ten"></span></p>
+        <p>NTK: <span id="ntk"></span></p>
+        <p>Hóa trị: <span id="hoatri"></span></p>
+    </div>
+</div>
+<script>
+    const data = {
+        "H": { ten: "Hydrogen", ntk: 1, hoatri: "I" },
+        "O": { ten: "Oxygen", ntk: 16, hoatri: "II" },
+        "Mg": { ten: "Magnesium", ntk: 24, hoatri: "II" },
+        "Al": { ten: "Aluminium", ntk: 27, hoatri: "III" },
+        "Fe": { ten: "Iron", ntk: 56, hoatri: "II, III" },
+        "Cu": { ten: "Copper", ntk: 64, hoatri: "I, II" },
+        "Na": { ten: "Sodium", ntk: 23, hoatri: "I" },
+        "Ca": { ten: "Calcium", ntk: 40, hoatri: "II" }
+    };
+    function traCuu() {
+        const val = document.getElementById('search').value.trim();
+        const res = document.getElementById('info');
+        if(data[val]) {
+            res.style.display = 'block';
+            document.getElementById('ten').innerText = data[val].ten;
+            document.getElementById('ntk').innerText = data[val].ntk;
+            document.getElementById('hoatri').innerText = data[val].hoatri;
+        } else { alert("Quái vật này chưa xuất hiện!"); }
+    }
+</script>
+</body>
+</html>
