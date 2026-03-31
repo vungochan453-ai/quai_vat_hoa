@@ -3,49 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quái Vật Hóa - Han Vu</title>
+    <title>Hóa Học 7 PRO - Han Vu</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #2c3e50; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; color: white; }
-        .card { background: #34495e; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center; width: 320px; border: 2px solid #3498db; }
-        h2 { color: #3498db; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
-        input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: none; outline: none; box-sizing: border-box; font-size: 16px; }
-        button { width: 100%; padding: 12px; background: #e74c3c; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.3s; }
-        button:hover { background: #c0392b; transform: scale(1.05); }
-        .result { margin-top: 25px; text-align: left; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; display: none; }
-        span { color: #f1c40f; font-weight: bold; }
+        body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; color: white; }
+        .card { background: #16213e; padding: 25px; border-radius: 25px; box-shadow: 0 0 20px #3498db; text-align: center; width: 85%; max-width: 350px; border: 2px solid #0f3460; }
+        h2 { color: #e94560; text-shadow: 2px 2px #000; margin-bottom: 15px; font-size: 22px; }
+        input { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 10px; border: none; font-size: 16px; text-align: center; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #e94560; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 16px; box-shadow: 0 4px #950740; }
+        .result { margin-top: 20px; text-align: left; background: #0f3460; padding: 15px; border-radius: 15px; display: none; border-left: 5px solid #e94560; }
+        .info-row { margin: 8px 0; border-bottom: 1px solid #1a1a2e; padding-bottom: 4px; font-size: 15px; }
+        span { color: #4ecca3; font-weight: bold; float: right; }
     </style>
 </head>
 <body>
 <div class="card">
-    <h2>QUÁI VẬT HÓA</h2>
-    <input type="text" id="search" placeholder="Nhập ký hiệu (Mg, Al, Fe...)">
+    <h2>QUÁI VẬT HÓA 7 PRO</h2>
+    <input type="text" id="search" placeholder="Nhập Kí hiệu (Mg, Fe, Au...)">
     <button onclick="traCuu()">TRIỆU HỒI</button>
     <div id="info" class="result">
-        <p>Tên: <span id="ten"></span></p>
-        <p>NTK: <span id="ntk"></span></p>
-        <p>Hóa trị: <span id="hoatri"></span></p>
+        <div class="info-row">Tên: <span id="ten"></span></div>
+        <div class="info-row">Nguyên tử khối: <span id="ntk"></span></div>
+        <div class="info-row">Hóa trị: <span id="ht"></span></div>
+        <div class="info-row">Số hiệu (Z): <span id="sh"></span></div>
+        <div class="info-row">Loại: <span id="loai"></span></div>
     </div>
 </div>
 <script>
     const data = {
-        "H": { ten: "Hydrogen", ntk: 1, hoatri: "I" },
-        "O": { ten: "Oxygen", ntk: 16, hoatri: "II" },
-        "Mg": { ten: "Magnesium", ntk: 24, hoatri: "II" },
-        "Al": { ten: "Aluminium", ntk: 27, hoatri: "III" },
-        "Fe": { ten: "Iron", ntk: 56, hoatri: "II, III" },
-        "Cu": { ten: "Copper", ntk: 64, hoatri: "I, II" },
-        "Na": { ten: "Sodium", ntk: 23, hoatri: "I" },
-        "Ca": { ten: "Calcium", ntk: 40, hoatri: "II" }
+        "H": { ten: "Hydrogen", ntk: 1, ht: "I", sh: 1, loai: "Phi kim" },
+        "He": { ten: "Helium", ntk: 4, ht: "0", sh: 2, loai: "Khí hiếm" },
+        "Li": { ten: "Lithium", ntk: 7, ht: "I", sh: 3, loai: "Kim loại" },
+        "C": { ten: "Carbon", ntk: 12, ht: "IV, II", sh: 6, loai: "Phi kim" },
+        "N": { ten: "Nitrogen", ntk: 14, ht: "III, V", sh: 7, loai: "Phi kim" },
+        "O": { ten: "Oxygen", ntk: 16, ht: "II", sh: 8, loai: "Phi kim" },
+        "Na": { ten: "Sodium", ntk: 23, ht: "I", sh: 11, loai: "Kim loại" },
+        "Mg": { ten: "Magnesium", ntk: 24, ht: "II", sh: 12, loai: "Kim loại" },
+        "Al": { ten: "Aluminum", ntk: 27, ht: "III", sh: 13, loai: "Kim loại" },
+        "P": { ten: "Phosphorus", ntk: 31, ht: "III, V", sh: 15, loai: "Phi kim" },
+        "S": { ten: "Sulfur", ntk: 32, ht: "II, IV, VI", sh: 16, loai: "Phi kim" },
+        "Cl": { ten: "Chlorine", ntk: 35.5, ht: "I", sh: 17, loai: "Phi kim" },
+        "K": { ten: "Potassium", ntk: 39, ht: "I", sh: 19, loai: "Kim loại" },
+        "Ca": { ten: "Calcium", ntk: 40, ht: "II", sh: 20, loai: "Kim loại" },
+        "Fe": { ten: "Iron (Sắt)", ntk: 56, ht: "II, III", sh: 26, loai: "Kim loại" },
+        "Cu": { ten: "Copper (Đồng)", ntk: 64, ht: "I, II", sh: 29, loai: "Kim loại" },
+        "Ag": { ten: "Silver (Bạc)", ntk: 108, ht: "I", sh: 47, loai: "Kim loại" },
+        "Au": { ten: "Gold (Vàng)", ntk: 197, ht: "III", sh: 79, loai: "Kim loại" }
     };
     function traCuu() {
-        const val = document.getElementById('search').value.trim();
-        const res = document.getElementById('info');
-        if(data[val]) {
-            res.style.display = 'block';
-            document.getElementById('ten').innerText = data[val].ten;
-            document.getElementById('ntk').innerText = data[val].ntk;
-            document.getElementById('hoatri').innerText = data[val].hoatri;
-        } else { alert("Quái vật này chưa xuất hiện!"); }
+        const query = document.getElementById('search').value.trim();
+        const infoDiv = document.getElementById('info');
+        let res = data[query] || data[query.charAt(0).toUpperCase() + query.slice(1).toLowerCase()];
+        if(res) {
+            infoDiv.style.display = 'block';
+            document.getElementById('ten').innerText = res.ten;
+            document.getElementById('ntk').innerText = res.ntk;
+            document.getElementById('ht').innerText = res.ht;
+            document.getElementById('sh').innerText = res.sh;
+            document.getElementById('loai').innerText = res.loai;
+        } else { alert("Quái vật này chưa có trong danh sách!"); }
     }
 </script>
 </body>
