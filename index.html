@@ -3,64 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hóa Học 7 PRO - Han Vu</title>
+    <title>Hóa Học 7 - Siêu Cấp</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; color: white; }
-        .card { background: #16213e; padding: 25px; border-radius: 25px; box-shadow: 0 0 20px #3498db; text-align: center; width: 85%; max-width: 350px; border: 2px solid #0f3460; }
-        h2 { color: #e94560; text-shadow: 2px 2px #000; margin-bottom: 15px; font-size: 22px; }
-        input { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 10px; border: none; font-size: 16px; text-align: center; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background: #e94560; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 16px; box-shadow: 0 4px #950740; }
-        .result { margin-top: 20px; text-align: left; background: #0f3460; padding: 15px; border-radius: 15px; display: none; border-left: 5px solid #e94560; }
-        .info-row { margin: 8px 0; border-bottom: 1px solid #1a1a2e; padding-bottom: 4px; font-size: 15px; }
-        span { color: #4ecca3; font-weight: bold; float: right; }
+        body { font-family: 'Segoe UI', sans-serif; background: #0f0c29; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; color: white; padding: 20px; box-sizing: border-box; }
+        .card { background: #302b63; padding: 20px; border-radius: 20px; box-shadow: 0 0 20px #00d2ff; width: 100%; max-width: 380px; text-align: center; }
+        h2 { color: #00d2ff; font-size: 20px; text-transform: uppercase; margin-bottom: 20px; }
+        .box { background: rgba(255,255,255,0.1); padding: 15px; border-radius: 15px; margin-bottom: 15px; border: 1px solid #24243e; }
+        input { width: 100%; padding: 10px; margin: 10px 0; border-radius: 8px; border: none; text-align: center; font-size: 16px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #00d2ff; color: #0f0c29; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .result { margin-top: 15px; text-align: left; padding: 10px; background: #24243e; border-radius: 10px; display: none; border-left: 4px solid #00d2ff; }
+        .ptk-res { color: #f1c40f; font-weight: bold; font-size: 18px; margin-top: 10px; display: block; text-align: center; }
     </style>
 </head>
 <body>
 <div class="card">
-    <h2>QUÁI VẬT HÓA 7 PRO</h2>
-    <input type="text" id="search" placeholder="Nhập Kí hiệu (Mg, Fe, Au...)">
-    <button onclick="traCuu()">TRIỆU HỒI</button>
-    <div id="info" class="result">
-        <div class="info-row">Tên: <span id="ten"></span></div>
-        <div class="info-row">Nguyên tử khối: <span id="ntk"></span></div>
-        <div class="info-row">Hóa trị: <span id="ht"></span></div>
-        <div class="info-row">Số hiệu (Z): <span id="sh"></span></div>
-        <div class="info-row">Loại: <span id="loai"></span></div>
+    <h2>HÓA HỌC 7 - SIÊU CẤP</h2>
+    <div class="box">
+        <p>1. Tra cứu nguyên tố</p>
+        <input type="text" id="search" placeholder="Nhập Kí hiệu (Fe, Mg, O...)">
+        <button onclick="traCuu()">TRIỆU HỒI</button>
+        <div id="info" class="result">
+            Tên: <b id="ten" style="color:#00d2ff"></b><br>
+            Hóa trị: <b id="ht" style="color:#f1c40f"></b><br>
+            NTK: <b id="ntk" style="color:#2ecc71"></b>
+        </div>
+    </div>
+    <div class="box">
+        <p>2. Tính Phân tử khối (PTK)</p>
+        <input type="text" id="formula" placeholder="Ví dụ: H2O, NaCl, CaCO3">
+        <button onclick="tinhPTK()" style="background: #2ecc71;">TÍNH NGAY</button>
+        <div id="ptk-info" class="result">
+            Kết quả: <span id="ptk-val" class="ptk-res"></span>
+        </div>
     </div>
 </div>
 <script>
     const data = {
-        "H": { ten: "Hydrogen", ntk: 1, ht: "I", sh: 1, loai: "Phi kim" },
-        "He": { ten: "Helium", ntk: 4, ht: "0", sh: 2, loai: "Khí hiếm" },
-        "Li": { ten: "Lithium", ntk: 7, ht: "I", sh: 3, loai: "Kim loại" },
-        "C": { ten: "Carbon", ntk: 12, ht: "IV, II", sh: 6, loai: "Phi kim" },
-        "N": { ten: "Nitrogen", ntk: 14, ht: "III, V", sh: 7, loai: "Phi kim" },
-        "O": { ten: "Oxygen", ntk: 16, ht: "II", sh: 8, loai: "Phi kim" },
-        "Na": { ten: "Sodium", ntk: 23, ht: "I", sh: 11, loai: "Kim loại" },
-        "Mg": { ten: "Magnesium", ntk: 24, ht: "II", sh: 12, loai: "Kim loại" },
-        "Al": { ten: "Aluminum", ntk: 27, ht: "III", sh: 13, loai: "Kim loại" },
-        "P": { ten: "Phosphorus", ntk: 31, ht: "III, V", sh: 15, loai: "Phi kim" },
-        "S": { ten: "Sulfur", ntk: 32, ht: "II, IV, VI", sh: 16, loai: "Phi kim" },
-        "Cl": { ten: "Chlorine", ntk: 35.5, ht: "I", sh: 17, loai: "Phi kim" },
-        "K": { ten: "Potassium", ntk: 39, ht: "I", sh: 19, loai: "Kim loại" },
-        "Ca": { ten: "Calcium", ntk: 40, ht: "II", sh: 20, loai: "Kim loại" },
-        "Fe": { ten: "Iron (Sắt)", ntk: 56, ht: "II, III", sh: 26, loai: "Kim loại" },
-        "Cu": { ten: "Copper (Đồng)", ntk: 64, ht: "I, II", sh: 29, loai: "Kim loại" },
-        "Ag": { ten: "Silver (Bạc)", ntk: 108, ht: "I", sh: 47, loai: "Kim loại" },
-        "Au": { ten: "Gold (Vàng)", ntk: 197, ht: "III", sh: 79, loai: "Kim loại" }
+        "H": 1, "He": 4, "Li": 7, "Be": 9, "B": 11, "C": 12, "N": 14, "O": 16, "F": 19, "Ne": 20,
+        "Na": 23, "Mg": 24, "Al": 27, "Si": 28, "P": 31, "S": 32, "Cl": 35.5, "Ar": 40, "K": 39, "Ca": 40,
+        "Fe": 56, "Cu": 64, "Zn": 65, "Ag": 108, "Ba": 137, "Au": 197
     };
+    const hoatri = { "H":"I", "O":"II", "Mg":"II", "Al":"III", "Fe":"II, III", "Cu":"I, II", "Na":"I", "Ca":"II", "Cl":"I", "S":"II, IV, VI" };
     function traCuu() {
-        const query = document.getElementById('search').value.trim();
-        const infoDiv = document.getElementById('info');
-        let res = data[query] || data[query.charAt(0).toUpperCase() + query.slice(1).toLowerCase()];
+        const q = document.getElementById('search').value.trim();
+        const res = data[q] || data[q.charAt(0).toUpperCase() + q.slice(1).toLowerCase()];
         if(res) {
-            infoDiv.style.display = 'block';
-            document.getElementById('ten').innerText = res.ten;
-            document.getElementById('ntk').innerText = res.ntk;
-            document.getElementById('ht').innerText = res.ht;
-            document.getElementById('sh').innerText = res.sh;
-            document.getElementById('loai').innerText = res.loai;
-        } else { alert("Quái vật này chưa có trong danh sách!"); }
+            document.getElementById('info').style.display = 'block';
+            document.getElementById('ten').innerText = q.toUpperCase();
+            document.getElementById('ntk').innerText = res + " amu";
+            document.getElementById('ht').innerText = hoatri[q] || "Chưa rõ";
+        } else { alert("Không thấy nguyên tố này!"); }
+    }
+    function tinhPTK() {
+        const f = document.getElementById('formula').value.trim();
+        const regex = /([A-Z][a-z]?)(\d*)/g;
+        let match; let total = 0;
+        while ((match = regex.exec(f)) !== null) {
+            let symbol = match[1];
+            let count = parseInt(match[2]) || 1;
+            if (data[symbol]) { total += data[symbol] * count; } 
+            else { alert("Không biết chất: " + symbol); return; }
+        }
+        if(total > 0) {
+            document.getElementById('ptk-info').style.display = 'block';
+            document.getElementById('ptk-val').innerText = total + " amu";
+        }
     }
 </script>
 </body>
